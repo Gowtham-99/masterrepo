@@ -1,0 +1,16 @@
+pipeline {
+    
+    parameters {
+        string (name: 'PkgName', description: 'provide pkgname?' default:"httpd"),
+        choice (name: 'Pkginstallconfirmation', choice:"-y \n n \n yes \n no", description: 'confirm')
+    }
+    agent any
+    stages {
+        stage('Test'){
+            steps {
+                sh '''echo "yum install $Pkginstallconfirmation $PkgName"
+                sudo yum install $Pkginstallconfirmation $PkgName
+            }
+        }
+    }
+}
